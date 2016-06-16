@@ -79,40 +79,36 @@ end
 diff_PF1_DF = Results.PF1.powertorque > Results.DF.powertorque;
 diff_PF2_DF = Results.PF2.powertorque > Results.DF.powertorque;
 diff_PF2_PF1 = Results.PF2.powertorque > Results.PF1.powertorque;
-
+%%
 figure
 pValue_PF2_DF = zeros(size(F));
 for i = 1 : length(F)
-    pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i),2)/numSubjects,numSubjects,0.5,'both');
+    pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
 end
-plot(F,pValue_PF2_DF,'color','b','lineWidth',2);%,'MarkerFaceColor','b','MarkerSize',8)
+plot(F,pValue_PF2_DF,'color','b','lineWidth',1);
 hold on
 pValue_PF1_DF = zeros(size(F));
 for i = 1 : length(F)
-    pValue_PF1_DF(i) = binomial_pval(sum(diff_PF1_DF(i),2)/numSubjects,numSubjects,0.5,'both');
+    pValue_PF1_DF(i) = binomial_pval(sum(diff_PF1_DF(i,:))/numSubjects,numSubjects,0.5,'both');
 end
-plot(F,pValue_PF1_DF,'color','r');%,'MarkerFaceColor','r','MarkerSize',8)
+plot(F,pValue_PF1_DF,'color','r','lineWidth',1);
 
 pValue_PF2_PF1 = zeros(size(F));
 for i = 1 : length(F)
-    pValue_PF2_PF1(i) = binomial_pval(sum(diff_PF2_PF1(i),2)/numSubjects,numSubjects,0.5,'both');
+    pValue_PF2_PF1(i) = binomial_pval(sum(diff_PF2_PF1(i,:))/numSubjects,numSubjects,0.5,'both');
 end
-plot(F,pValue_PF2_PF1,'--','color','k','lineWidth',2);%,'MarkerFaceColor','r','MarkerSize',8)
-xlim([0,20])
-%%
-
-plot(F,binomial_pval(sum(diff_PF2_PF1,2)/numSubjects,numSubjects,0.5,'both'),'--d','color','k','MarkerFaceColor','k','MarkerSize',8)
-plot([0,20],[0.5,0.5],'--k')
-plot([0,20],[0.8,0.8],'--k')
+plot(F,pValue_PF2_PF1,'color','k','lineWidth',1);
+plot([0,20],[0.05,0.05],'--k')
 xlim([0,20])
 ylim([0,1])
+
 legend('Power_{-20 ^{\circ}}>Power_{8.6 ^{\circ}}',...
     'Power_{-5.7 ^{\circ}}>Power_{8.6 ^{\circ}}'...
     ,'Power_{-20 ^{\circ}}>Power_{-5.7 ^{\circ}}')
 xlabel('Frequency (Hz)')
-ylabel('Probability')
+ylabel('P-Value')
 box off
-
+%%
 
 diff_MVC40_20 = Results.PF2.MVC40.powertorque > Results.PF2.MVC20.powertorque;
 diff_MVC40_30 = Results.PF2.MVC40.powertorque > Results.PF2.MVC30.powertorque;
