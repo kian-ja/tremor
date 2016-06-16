@@ -1,10 +1,10 @@
-experiment.fileName{1} = 'DLG_230316.flb';
-experiment.fileName{2} = 'ES_070416.flb';
-experiment.fileName{3} = 'IH_010616.flb';
-experiment.fileName{4} = 'KJ_300516.flb';
-experiment.fileName{5} = 'MG_270516.flb';
-experiment.fileName{6} = 'MR_300516.flb';
-experiment.fileName{7} = 'PA_220316.flb';
+experiment.fileName{1} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/DLG_230316.flb';
+experiment.fileName{2} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/ES_070416.flb';
+experiment.fileName{3} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/IH_010616.flb';
+experiment.fileName{4} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/KJ_300516.flb';
+experiment.fileName{5} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/MG_270516.flb';
+experiment.fileName{6} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/MR_300516.flb';
+experiment.fileName{7} = '/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Data/PA_220316.flb';
 
 %%%%
 experiment.DF.MVC{1} = 2;
