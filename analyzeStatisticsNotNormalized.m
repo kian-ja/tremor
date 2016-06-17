@@ -76,95 +76,21 @@ for i = 1 : numSubjects
 
 end
 %%
-diff_PF1_DF = Results.PF1.powertorque > Results.DF.powertorque;
-diff_PF2_DF = Results.PF2.powertorque > Results.DF.powertorque;
-diff_PF2_PF1 = Results.PF2.powertorque > Results.PF1.powertorque;
-
 figure
-hold on
-fill([0,0,25,25],[0,0.05,0.05,0],[225,225,225]/255)
-pValue_PF2_DF = zeros(size(F));
-for i = 1 : length(F)
-    pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_PF2_DF,'color','b','lineWidth',1);
-pValue_PF1_DF = zeros(size(F));
-for i = 1 : length(F)
-    pValue_PF1_DF(i) = binomial_pval(sum(diff_PF1_DF(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_PF1_DF,'color','r','lineWidth',1.5);
-
-pValue_PF2_PF1 = zeros(size(F));
-for i = 1 : length(F)
-    pValue_PF2_PF1(i) = binomial_pval(sum(diff_PF2_PF1(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_PF2_PF1,'--','color','k','lineWidth',2);
-xlim([0,25])
-ylim([0,1])
-legend('Significance Interval','Power_{-20 ^{\circ}}, Power_{8.6 ^{\circ}}',...
-    'Power_{-5.7 ^{\circ}}, Power_{8.6 ^{\circ}}'...
-    ,'Power_{-20 ^{\circ}}, Power_{-5.7 ^{\circ}}')
-xlabel('Frequency (Hz)')
-ylabel('P-Value')
-box off
-%%
-figure
-subplot(3,1,1)
-bar([Results.DF.powerFreqBand(1,:);Results.PF1.powerFreqBand(1,:);Results.PF2.powerFreqBand(1,:)]');
+bar(100*[Results.DF.powerFreqBand(1,:);Results.PF1.powerFreqBand(1,:);Results.PF2.powerFreqBand(1,:)]');
+legend('DP','MP','PP')
+ylabel('Power')
+xlabel('Subject number')
 title('Total Power')
-subplot(3,1,2)
-bar([Results.DF.powerFreqBand(2,:);Results.PF1.powerFreqBand(2,:);Results.PF2.powerFreqBand(2,:)]');
-title('Low Frequency Power')
-subplot(3,1,3)
-bar([Results.DF.powerFreqBand(3,:);Results.PF1.powerFreqBand(3,:);Results.PF2.powerFreqBand(3,:)]');
-title('Tremor Power')
 box off
-%%
-
-diff_MVC40_20 = Results.PF2.MVC40.powertorque > Results.PF2.MVC20.powertorque;
-diff_MVC40_30 = Results.PF2.MVC40.powertorque > Results.PF2.MVC30.powertorque;
-diff_MVC30_20 = Results.PF2.MVC30.powertorque > Results.PF2.MVC20.powertorque;
-
-figure
-hold on
-fill([0,0,25,25],[0,0.05,0.05,0],[225,225,225]/255)
-pValue_MVC40_MVC20 = zeros(size(F));
-for i = 1 : length(F)
-    pValue_MVC40_MVC20(i) = binomial_pval(sum(diff_MVC40_20(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_MVC40_MVC20,'color','b','lineWidth',1);
-
-pValue_MVC40_MVC30 = zeros(size(F));
-for i = 1 : length(F)
-    pValue_MVC40_MVC30(i) = binomial_pval(sum(diff_MVC40_30(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_MVC40_MVC30,'color','r','lineWidth',1.5);
-
-pValue_MVC30_MVC20 = zeros(size(F));
-for i = 1 : length(F)
-    pValue_MVC30_MVC20(i) = binomial_pval(sum(diff_MVC30_20(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(F,pValue_MVC30_MVC20,'--','color','k','lineWidth',2);
-
-xlim([0,25])
-ylim([0,1])
-legend('Significance Level','Power_{40%MVC},Power_{20%MVC}',...
-    'Power_{40%MVC},Power_{30%MVC}'...
-    ,'Power_{30%MVC},Power_{20%MVC}')
-xlabel('Frequency (Hz)')
-ylabel('P-Value')
-box off
+saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalPowerPosition.pdf')
 
 %%
-
 figure
-subplot(3,1,1)
-bar([Results.PF2.MVC20.powerFreqBand(1,:);Results.PF2.MVC30.powerFreqBand(1,:);Results.PF2.MVC40.powerFreqBand(1,:)]');
+bar(100*[Results.PF2.MVC20.powerFreqBand(1,:);Results.PF2.MVC30.powerFreqBand(1,:);Results.PF2.MVC40.powerFreqBand(1,:)]');
+legend('20%','30%','40%')
+ylabel('Power')
+xlabel('Subject number')
 title('Total Power')
-subplot(3,1,2)
-bar([Results.PF2.MVC20.powerFreqBand(2,:);Results.PF2.MVC30.powerFreqBand(2,:);Results.PF2.MVC40.powerFreqBand(2,:)]');
-title('Low Frequency Power')
-subplot(3,1,3)
-bar([Results.PF2.MVC20.powerFreqBand(3,:);Results.PF2.MVC30.powerFreqBand(3,:);Results.PF2.MVC40.powerFreqBand(3,:)]');
-title('Tremor Power')
 box off
+saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalPowerContraction.pdf')
