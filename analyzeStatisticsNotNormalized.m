@@ -2,7 +2,7 @@ load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
 frequencyBands = [6 ; 12];
-normalize = true;
+normalize = false;
 for i = 1 : numSubjects
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.MVC{i});
     MVC_DF = min(torque);
@@ -82,7 +82,7 @@ diff_PF2_PF1 = Results.PF2.powertorque > Results.PF1.powertorque;
 
 figure
 hold on
-fill([0,0,20,20],[0,0.05,0.05,0],[225,225,225]/255)
+fill([0,0,25,25],[0,0.05,0.05,0],[225,225,225]/255)
 pValue_PF2_DF = zeros(size(F));
 for i = 1 : length(F)
     pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
@@ -99,34 +99,13 @@ for i = 1 : length(F)
     pValue_PF2_PF1(i) = binomial_pval(sum(diff_PF2_PF1(i,:))/numSubjects,numSubjects,0.5,'both');
 end
 plot(F,pValue_PF2_PF1,'--','color','k','lineWidth',2);
-plot([0,20],[0.05,0.05],'--k')
-xlim([0,20])
+xlim([0,25])
 ylim([0,1])
-legend('Significant Interval','Power_{-20 ^{\circ}} , Power_{8.6 ^{\circ}}',...
-    'Power_{-5.7 ^{\circ}} , Power_{8.6 ^{\circ}}'...
-    ,'Power_{-20 ^{\circ}} , Power_{-5.7 ^{\circ}}')
+legend('Significance Interval','Power_{-20 ^{\circ}}, Power_{8.6 ^{\circ}}',...
+    'Power_{-5.7 ^{\circ}}, Power_{8.6 ^{\circ}}'...
+    ,'Power_{-20 ^{\circ}}, Power_{-5.7 ^{\circ}}')
 xlabel('Frequency (Hz)')
 ylabel('P-Value')
-box off
-%%
-
-diff_MVC40_20 = Results.PF2.MVC40.powertorque > Results.PF2.MVC20.powertorque;
-diff_MVC40_30 = Results.PF2.MVC40.powertorque > Results.PF2.MVC30.powertorque;
-diff_MVC30_20 = Results.PF2.MVC30.powertorque > Results.PF2.MVC20.powertorque;
-figure
-plot(F,binomial_pval(sum(diff_MVC40_20,2)/numSubjects,numSubjects,0.5,'both'),'--s','color','b','MarkerFaceColor','b','MarkerSize',8)
-hold on
-plot(F,binomial_pval(sum(diff_MVC40_30,2)/numSubjects,numSubjects,0.5,'both'),'--o','color','r','MarkerFaceColor','r','MarkerSize',8)
-plot(F,binomial_pval(sum(diff_MVC30_20,2)/numSubjects,numSubjects,0.5,'both'),'--d','color','k','MarkerFaceColor','k','MarkerSize',8)
-plot([0,20],[0.5,0.5],'--k')
-plot([0,20],[0.8,0.8],'--k')
-xlim([0,20])
-ylim([0,1])
-legend('Power_{40%MVC}>Power_{20%MVC}',...
-    'Power_{40%MVC}>Power_{30%MVC}'...
-    ,'Power_{30%MVC}>Power_{20%MVC}')
-xlabel('Frequency (Hz)')
-ylabel('Probability')
 box off
 %%
 figure
@@ -139,7 +118,44 @@ title('Low Frequency Power')
 subplot(3,1,3)
 bar([Results.DF.powerFreqBand(3,:);Results.PF1.powerFreqBand(3,:);Results.PF2.powerFreqBand(3,:)]');
 title('Tremor Power')
+box off
+%%
 
+diff_MVC40_20 = Results.PF2.MVC40.powertorque > Results.PF2.MVC20.powertorque;
+diff_MVC40_30 = Results.PF2.MVC40.powertorque > Results.PF2.MVC30.powertorque;
+diff_MVC30_20 = Results.PF2.MVC30.powertorque > Results.PF2.MVC20.powertorque;
+
+figure
+hold on
+fill([0,0,25,25],[0,0.05,0.05,0],[225,225,225]/255)
+pValue_MVC40_MVC20 = zeros(size(F));
+for i = 1 : length(F)
+    pValue_MVC40_MVC20(i) = binomial_pval(sum(diff_MVC40_20(i,:))/numSubjects,numSubjects,0.5,'both');
+end
+plot(F,pValue_MVC40_MVC20,'color','b','lineWidth',1);
+
+pValue_MVC40_MVC30 = zeros(size(F));
+for i = 1 : length(F)
+    pValue_MVC40_MVC30(i) = binomial_pval(sum(diff_MVC40_30(i,:))/numSubjects,numSubjects,0.5,'both');
+end
+plot(F,pValue_MVC40_MVC30,'color','r','lineWidth',1.5);
+
+pValue_MVC30_MVC20 = zeros(size(F));
+for i = 1 : length(F)
+    pValue_MVC30_MVC20(i) = binomial_pval(sum(diff_MVC30_20(i,:))/numSubjects,numSubjects,0.5,'both');
+end
+plot(F,pValue_MVC30_MVC20,'--','color','k','lineWidth',2);
+
+xlim([0,25])
+ylim([0,1])
+legend('Significance Level','Power_{40%MVC},Power_{20%MVC}',...
+    'Power_{40%MVC},Power_{30%MVC}'...
+    ,'Power_{30%MVC},Power_{20%MVC}')
+xlabel('Frequency (Hz)')
+ylabel('P-Value')
+box off
+
+%%
 
 figure
 subplot(3,1,1)
@@ -151,3 +167,4 @@ title('Low Frequency Power')
 subplot(3,1,3)
 bar([Results.PF2.MVC20.powerFreqBand(3,:);Results.PF2.MVC30.powerFreqBand(3,:);Results.PF2.MVC40.powerFreqBand(3,:)]');
 title('Tremor Power')
+box off
