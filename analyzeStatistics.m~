@@ -75,14 +75,14 @@ for i = 1 : numSubjects
     Results.F = F;
 
 end
-%%
+
 diff_PF1_DF = Results.PF1.powertorque > Results.DF.powertorque;
 diff_PF2_DF = Results.PF2.powertorque > Results.DF.powertorque;
 diff_PF2_PF1 = Results.PF2.powertorque > Results.PF1.powertorque;
-
+%%
 figure
 hold on
-fill([0,0,20,20],[0,0.05,0.05,0],[225,225,225]/255)
+fill([0,0,20,20],[0,0.05,0.05,0],[200,224,224]/255)
 pValue_PF2_DF = zeros(size(F));
 for i = 1 : length(F)
     pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
@@ -102,7 +102,7 @@ plot(F,pValue_PF2_PF1,'--','color','k','lineWidth',2);
 plot([0,20],[0.05,0.05],'--k')
 xlim([0,20])
 ylim([0,1])
-legend('Significant Interval','Power_{-20 ^{\circ}} , Power_{8.6 ^{\circ}}',...
+legend('Power_{-20 ^{\circ}} , Power_{8.6 ^{\circ}}',...
     'Power_{-5.7 ^{\circ}} , Power_{8.6 ^{\circ}}'...
     ,'Power_{-20 ^{\circ}} , Power_{-5.7 ^{\circ}}')
 xlabel('Frequency (Hz)')
