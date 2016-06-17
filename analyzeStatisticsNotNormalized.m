@@ -15,7 +15,8 @@ for i = 1 : numSubjects
     [torque_DF_Power,F] = powerSignal(torque_DF,normalize);
     powerFreqBand_DF = powerFreqBand(torque_DF_Power,F,frequencyBands,normalize);
     EMG_DF = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
-    [EMG_DF_Coherence,F] = coherenceXY(EMG_DF,torque_DF);
+    [EMG_DF_Coherence,F] = coherence_EMG_Torque(EMG_DF,torque_DF);
+    EMG_DF_CoherenceFreqBand = powerFreqBand(EMG_DF_Coherence,F,frequencyBands,normalize);
     Results.DF.powertorque(:,i) = torque_DF_Power;
     Results.DF.powerFreqBand(:,i) = powerFreqBand_DF;
     
