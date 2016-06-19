@@ -1,3 +1,6 @@
+clear
+clc
+close all
 load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
@@ -75,6 +78,8 @@ for i = 1 : numSubjects
     Results.F = F;
 
 end
+resultsNormalized = Results;
+save resultsNormalized resultsNormalized;
 %%
 diff_PF1_DF = Results.PF1.powertorque > Results.DF.powertorque;
 diff_PF2_DF = Results.PF2.powertorque > Results.DF.powertorque;

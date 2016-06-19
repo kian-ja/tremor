@@ -1,3 +1,6 @@
+clear
+clc
+close all
 load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
@@ -104,15 +107,19 @@ for i = 1 : numSubjects
     Results.PF2.MVC40.powerFreqBand(:,i) = powerFreqBand_PF2_MVC40;
     
     Results.F = F;
-
 end
+resultsNotNormalized = Results;
+save resultsNotNormalized resultsNotNormalized;
 %%
 figure
-bar(100*[Results.DF.powerFreqBand(1,:);Results.PF1.powerFreqBand(1,:);Results.PF2.powerFreqBand(1,:)]');
+b = bar(100*[Results.DF.powerFreqBand(1,:);Results.PF1.powerFreqBand(1,:);Results.PF2.powerFreqBand(1,:)]');
+set(b(1),'FaceColor','b');
+set(b(2),'FaceColor','k');
+set(b(3),'FaceColor','r');
 legend('DP','MP','PP')
 ylabel('Power')
 xlabel('Subject number')
-title('Total Power')
+title('Torque Absolute Power')
 box off
 saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalPowerPosition.pdf')
 
