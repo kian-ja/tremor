@@ -5,15 +5,10 @@ load experimentTrials
 load resultsNotNormalized
 load experimentTrials
 numSubjects = length(experiment.fileName);
+subjectName = createSubjectName('S',numSubjects);
+
 %%
-subjectName = [];
-subjectName{1} = 'S_1';
-subjectName{2} = 'S_2';
-subjectName{3} = 'S_3';
-subjectName{4} = 'S_4';
-subjectName{5} = 'S_5';
-subjectName{6} = 'S_6';
-subjectName{7} = 'S_7';
+
 figure
 subplot(2,1,1)
 b = bar(100*[resultsNotNormalized.DF.powerFreqBand(1,:);resultsNotNormalized.PF1.powerFreqBand(1,:);resultsNotNormalized.PF2.powerFreqBand(1,:)]');
@@ -22,9 +17,9 @@ set(b(2),'FaceColor','k');
 set(b(3),'FaceColor','r');
 legend('DP','MP','PP')
 ylabel('Power')
-title('Torque Total Power')
+title('Total Torque Power')
 set(gca,'XTickLabel',[])
-
+annotation('textbox','String','(A)','LineStyle','none','Position',[0.13 0.42 0.2 0.5]);
 box off
 subplot(2,1,2)
 b = bar(100*[resultsNormalized.DF.powerFreqBand(3,:);resultsNormalized.PF1.powerFreqBand(3,:);resultsNormalized.PF2.powerFreqBand(3,:)]');
@@ -35,9 +30,9 @@ title('Tremor Power')
 ylabel('Percentage of total power')
 xlabel('Subject')
 set(gca,'XTickLabel',subjectName)
+annotation('textbox','String','(B)','LineStyle','none','Position',[0.13 0.15 0.2 0.3]);
 box off
-
-%saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalTremorPowerPosition.pdf')
+saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalTremorPowerPosition.pdf')
 %%
 diff_PF1_DF = resultsNormalized.PF1.powertorque > resultsNormalized.DF.powertorque;
 diff_PF2_DF = resultsNormalized.PF2.powertorque > resultsNormalized.DF.powertorque;
