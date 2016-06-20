@@ -45,37 +45,23 @@ saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and R
 % set(gca,'XTickLabel',subjectName)
 
 %%
-diff_PF1_DF = resultsNormalized.PF1.powertorque > resultsNormalized.DF.powertorque;
-diff_PF2_DF = resultsNormalized.PF2.powertorque > resultsNormalized.DF.powertorque;
-diff_PF2_PF1 = resultsNormalized.PF2.powertorque > resultsNormalized.PF1.powertorque;
 
-pValue_PF2_DF = pValueSigned2Sided(resultsNormalized.PF2.powertorque ,...
-    resultsNormalized.DF.powertorque,numSubjects);
-pValue_PF1_DF = pValueSigned2Sided(resultsNormalized.PF1.powertorque ,...
-    resultsNormalized.DF.powertorque,numSubjects);
-pValue_PF2_PF1 = pValueSigned2Sided(resultsNormalized.PF2.powertorque ,...
-    resultsNormalized.PF1.powertorque,numSubjects);
+pValue_PF2_DF = pValueSign2Sided(resultsNormalized.PF2.powertorque,...
+    resultsNormalized.DF.powertorque);
+pValue_PF1_DF = pValueSign2Sided(resultsNormalized.PF1.powertorque,...
+    resultsNormalized.DF.powertorque);
+pValue_PF2_PF1 = pValueSign2Sided(resultsNormalized.PF2.powertorque,...
+    resultsNormalized.PF1.powertorque);
 
 figure
 hold on
 fill([0,0,25,25],[0,0.05,0.05,0],[225,225,225]/255)
-pValue_PF2_DF = zeros(size(resultsNormalized.F));
-for i = 1 : length(resultsNormalized.F)
-    pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-pValue_PF2_DF = pValueSigned2Sided(resultsNormalized.PF2.powertorque , resultsNormalized.DF.powertorque);
-plot(resultsNormalized.F,pValue_PF2_DF,'color','r','lineWidth',1,'marker','d','markerFaceColor','r');
-pValue_PF1_DF = zeros(size(resultsNormalized.F));
-for i = 1 : length(resultsNormalized.F)
-    pValue_PF1_DF(i) = binomial_pval(sum(diff_PF1_DF(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(resultsNormalized.F,pValue_PF1_DF,'color','b','lineWidth',1,'marker','o','markerFaceColor','b');
-
-pValue_PF2_PF1 = zeros(size(resultsNormalized.F));
-for i = 1 : length(resultsNormalized.F)
-    pValue_PF2_PF1(i) = binomial_pval(sum(diff_PF2_PF1(i,:))/numSubjects,numSubjects,0.5,'both');
-end
-plot(resultsNormalized.F,pValue_PF2_PF1,'--','color','k','lineWidth',2.5,'marker','s','markerFaceColor','k');
+plot(resultsNormalized.F,pValue_PF2_DF,'color','r','lineWidth',1,'marker'...
+    ,'d','markerFaceColor','r');
+plot(resultsNormalized.F,pValue_PF1_DF,'color','b','lineWidth',1,'marker'...
+    ,'o','markerFaceColor','b');
+plot(resultsNormalized.F,pValue_PF2_PF1,'--','color','k','lineWidth',2.5,...
+    'marker','s','markerFaceColor','k');
 xlim([0,25])
 ylim([0,1])
 legend('Significance Interval','Power_{PP}, Power_{DP}',...
