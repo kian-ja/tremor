@@ -34,9 +34,27 @@ annotation('textbox','String','(B)','LineStyle','none','Position',[0.13 0.15 0.2
 box off
 saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalTremorPowerPosition.pdf')
 %%
+% figure
+% b = bar(100*[resultsNormalized.DF.powerFreqBand(2,:);resultsNormalized.PF1.powerFreqBand(2,:);resultsNormalized.PF2.powerFreqBand(2,:)]');
+% set(b(1),'FaceColor','b');
+% set(b(2),'FaceColor','k');
+% set(b(3),'FaceColor','r');
+% title('Tremor Power')
+% ylabel('Percentage of total power')
+% xlabel('Subject')
+% set(gca,'XTickLabel',subjectName)
+
+%%
 diff_PF1_DF = resultsNormalized.PF1.powertorque > resultsNormalized.DF.powertorque;
 diff_PF2_DF = resultsNormalized.PF2.powertorque > resultsNormalized.DF.powertorque;
 diff_PF2_PF1 = resultsNormalized.PF2.powertorque > resultsNormalized.PF1.powertorque;
+
+pValue_PF2_DF = pValueSigned2Sided(resultsNormalized.PF2.powertorque ,...
+    resultsNormalized.DF.powertorque,numSubjects);
+pValue_PF1_DF = pValueSigned2Sided(resultsNormalized.PF1.powertorque ,...
+    resultsNormalized.DF.powertorque,numSubjects);
+pValue_PF2_PF1 = pValueSigned2Sided(resultsNormalized.PF2.powertorque ,...
+    resultsNormalized.PF1.powertorque,numSubjects);
 
 figure
 hold on
@@ -45,6 +63,7 @@ pValue_PF2_DF = zeros(size(resultsNormalized.F));
 for i = 1 : length(resultsNormalized.F)
     pValue_PF2_DF(i) = binomial_pval(sum(diff_PF2_DF(i,:))/numSubjects,numSubjects,0.5,'both');
 end
+pValue_PF2_DF = pValueSigned2Sided(resultsNormalized.PF2.powertorque , resultsNormalized.DF.powertorque);
 plot(resultsNormalized.F,pValue_PF2_DF,'color','r','lineWidth',1,'marker','d','markerFaceColor','r');
 pValue_PF1_DF = zeros(size(resultsNormalized.F));
 for i = 1 : length(resultsNormalized.F)
@@ -66,7 +85,6 @@ xlabel('Frequency (Hz)')
 ylabel('P-Value')
 box off
 saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/pValuePosition.pdf')
-
 %%
 
 diff_MVC40_20 = resultsNormalized.PF2.MVC40.powertorque > resultsNormalized.PF2.MVC20.powertorque;
