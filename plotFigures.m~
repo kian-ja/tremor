@@ -6,14 +6,6 @@ load resultsNotNormalized
 load experimentTrials
 numSubjects = length(experiment.fileName);
 %%
-subjectName = [];
-subjectName{1} = 'S_1';
-subjectName{2} = 'S_2';
-subjectName{3} = 'S_3';
-subjectName{4} = 'S_4';
-subjectName{5} = 'S_5';
-subjectName{6} = 'S_6';
-subjectName{7} = 'S_7';
 figure
 subplot(2,1,1)
 b = bar(100*[resultsNotNormalized.DF.powerFreqBand(1,:);resultsNotNormalized.PF1.powerFreqBand(1,:);resultsNotNormalized.PF2.powerFreqBand(1,:)]');
@@ -22,9 +14,7 @@ set(b(2),'FaceColor','k');
 set(b(3),'FaceColor','r');
 legend('DP','MP','PP')
 ylabel('Power')
-title('Torque Total Power')
-set(gca,'XTickLabel',[])
-
+title('Torque Absolute Power')
 box off
 subplot(2,1,2)
 b = bar(100*[resultsNormalized.DF.powerFreqBand(3,:);resultsNormalized.PF1.powerFreqBand(3,:);resultsNormalized.PF2.powerFreqBand(3,:)]');
@@ -33,8 +23,8 @@ set(b(2),'FaceColor','k');
 set(b(3),'FaceColor','r');
 title('Tremor Power')
 ylabel('Percentage of total power')
-xlabel('Subject')
-set(gca,'XTickLabel',subjectName)
+xlabel('Subject number')
+set(gca,'YTick',1:12,'YTickLabel',months)
 box off
 
 %saveas(gcf,'/Users/Kian/Documents/publication/tremor/Ankle/Tremor/Analysis and Results/totalTremorPowerPosition.pdf')
