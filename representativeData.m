@@ -43,7 +43,7 @@ windowStart = 52100;
 windowEnd = windowStart + 999;
 time = 0 : 0.001: 1-0.001;
 figure
-subplot(3,1,1)
+subplot(1,2,1)
 plot(time,torque_DF(windowStart:windowEnd)*100)
 hold on
 plot(time,torque_PF1(windowStart:windowEnd)*100+1,'k')
@@ -53,3 +53,31 @@ xlabel('Time (s)')
 ylabel('Torque (%MVC)')
 box off
 %%
+normalize = false;
+[torque_DF_Power] = powerSignal(torque_DF,normalize);
+[torque_PF1_Power] = powerSignal(torque_PF1,normalize);
+[torque_PF2_Power,F] = powerSignal(torque_PF2,normalize);
+subplot(2,2,2)
+plot(F,torque_DF_Power)
+hold on
+plot(F,torque_PF1_Power,'k')
+plot(F,torque_PF2_Power,'r')
+xlim([0,20])
+ylim([0,6*(10^-8)])
+ylabel('Power')
+set(gca,'XTickLabel',[])
+
+box off
+%%
+subplot(2,2,4)
+[EMG_DF_Coherence] = coherence_EMG_Torque(EMG_DF(:,2),torque_DF);
+[EMG_PF1_Coherence] = coherence_EMG_Torque(EMG_PF1(:,2),torque_PF1);
+[EMG_PF2_Coherence,F] = coherence_EMG_Torque(EMG_PF2(:,2),torque_PF2);
+plot(F,EMG_DF_Coherence)
+hold on
+plot(F,EMG_PF1_Coherence,'k')
+plot(F,EMG_PF2_Coherence,'r')
+xlim([0,20])
+xlabel('Frequency (Hz)')
+ylabel('Coherence')
+box off

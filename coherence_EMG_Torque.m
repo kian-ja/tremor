@@ -9,7 +9,7 @@ num_EMG_channel = size(EMG,2);
 CC = zeros(length(frequency),num_EMG_channel);
 for i = 1 : num_EMG_channel
     [CC(:,i),F] = mscohere(EMG(:,i),torque,gausswin(windowLength),overLap,frequency,fs);
-    CC(:,i) = atanh(sqrt(CC(:,i)));
+    %CC(:,i) = atanh(sqrt(CC(:,i)));
 end
 
 end
