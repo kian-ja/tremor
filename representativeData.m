@@ -51,6 +51,7 @@ plot(time,torque_PF2(windowStart:windowEnd)*100+2 ,'r')
 legend('DF','PF1','PF2')
 xlabel('Time (s)')
 ylabel('Torque (%MVC)')
+title('Torque')
 box off
 %%
 normalize = false;
@@ -66,13 +67,13 @@ xlim([0,20])
 ylim([0,6*(10^-8)])
 ylabel('Power')
 set(gca,'XTickLabel',[])
-
+title('Torque Power Spectrum')
 box off
 %%
 subplot(2,2,4)
-[EMG_DF_Coherence] = coherence_EMG_Torque(EMG_DF(:,2),torque_DF);
-[EMG_PF1_Coherence] = coherence_EMG_Torque(EMG_PF1(:,2),torque_PF1);
-[EMG_PF2_Coherence,F] = coherence_EMG_Torque(EMG_PF2(:,2),torque_PF2);
+[EMG_DF_Coherence] = coherence_EMG_Torque(EMG_DF(:,2),torque_DF,false);
+[EMG_PF1_Coherence] = coherence_EMG_Torque(EMG_PF1(:,2),torque_PF1,false);
+[EMG_PF2_Coherence,F] = coherence_EMG_Torque(EMG_PF2(:,2),torque_PF2,false);
 plot(F,EMG_DF_Coherence)
 hold on
 plot(F,EMG_PF1_Coherence,'k')
@@ -80,4 +81,5 @@ plot(F,EMG_PF2_Coherence,'r')
 xlim([0,20])
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
+title('EMG-Torque Coherence')
 box off
