@@ -4,7 +4,8 @@ close all
 load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
-frequencyBands = [6 ; 12];
+%frequencyBands = [6 ; 12];
+frequencyBands = [1; 5; 6; 12];
 normalize = true;
 for i = 1 : numSubjects
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.MVC{i});
@@ -78,5 +79,7 @@ for i = 1 : numSubjects
     Results.F = F;
 
 end
-resultsNormalized = Results;
-save resultsNormalized resultsNormalized;
+%resultsNormalized = Results;
+%save resultsNormalized resultsNormalized;
+resultsNormalizedNewPowerBand = Results;
+save resultsNormalizedNewPowerBand resultsNormalizedNewPowerBand
