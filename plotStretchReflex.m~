@@ -1,0 +1,4 @@
+load stretchReflexResults
+conditions = 1:3;
+pulseResultsresults.PF2.pulseReflexAmplitude.mean
+bar(conditions, )

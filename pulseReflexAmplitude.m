@@ -20,7 +20,7 @@ for i = 1 : numPulses
      plot(time(reflexOnsetIndex(i):reflexEndIndex(i)),torque(reflexOnsetIndex(i):reflexEndIndex(i)),'o')
      responseSteadyState = mean(response(400:end));
      response = response - responseSteadyState;
-     reflexAmplitudeThisTrial(i) = sum(response.^2)/length(response);
+     reflexAmplitudeThisTrial(i) = sqrt(sum(response.^2)/length(response));
 end
 pause
 close(1000)
