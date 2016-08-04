@@ -16,3 +16,4 @@ experiment.PF2.Passive{1} = 11;
 experiment.PF2.isometricTrials{1} = [12,13,14];
 experiment.PF2.pulseTrials{1} = [16];
 experiment.PF2.praldsTrials{1} = [15];
+save stretchReflexTrials experiment
