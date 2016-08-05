@@ -51,7 +51,7 @@ for i = 1 : numSubjects
     Results.PF1.EMGCoherenceFreqBand{i} = EMG_PF1_CoherenceFreqBand;   
     Results.PF1.powertorque(:,i) = torque_PF1_Power;
     Results.PF1.powerFreqBand(:,i) = powerFreqBand_PF1;
-    Results.PF1.EMG_RMSr{i} = sqrt(sum(EMG_PF1.^2)/size(EMG_PF1,1));
+    Results.DF.EMG_RMSr{i} = sqrt(sum(EMG_PF1.^2)/size(EMG_PF1,1));
 
     
     
@@ -75,7 +75,7 @@ for i = 1 : numSubjects
     Results.PF2.EMGCoherenceFreqBand{i} = EMG_PF2_CoherenceFreqBand;
     Results.PF2.powertorque(:,i) = torque_PF2_Power;
     Results.PF2.powerFreqBand(:,i) = powerFreqBand_PF2;
-    Results.PF2.EMG_RMSr{i} = sqrt(sum(EMG_PF2.^2)/size(EMG_PF2,1));
+    
     
     torque_PF2_MVC20 = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF2.MVC20.Trials{i});
     torque_PF2_MVC20 = torque_PF2_MVC20 - passive_PF2;

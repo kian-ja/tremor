@@ -13,6 +13,9 @@ reflexAmplitudeThisTrial = zeros(numPulses,1);
 figure(1000)
 time = 1 : length(position);
 time = time * 0.001;
+subplot(2,1,1)
+plot(time,position)
+subplot(2,1,2)
 plot(time,torque)
 hold on
 for i = 1 : numPulses
@@ -22,6 +25,7 @@ for i = 1 : numPulses
      response = response - responseSteadyState;
      reflexAmplitudeThisTrial(i) = sqrt(sum(response.^2)/length(response));
 end
+xAxisPanZoom
 pause
 close(1000)
 reflexAmplitude = [reflexAmplitude;reflexAmplitudeThisTrial];
