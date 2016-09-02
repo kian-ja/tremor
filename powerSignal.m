@@ -5,14 +5,14 @@ if nargin == 1
 end
 fs = 1000;
 frequency = 0 : 1: fs/2;
-overLap = 1000;%500
-windowLength = 5000;%1000
+overLap = 500;
+windowLength = 1000;
 %% Preprocessing
 signal = signal - mean(signal);
-[powerSignal,F] = pwelch(signal,gausswin(windowLength),overLap,[],fs);
+[powerSignal,F] = pwelch(signal,gausswin(windowLength),overLap,frequency,fs);
 if normalize 
     powerTotal = sum(powerSignal(:));
     powerSignal = powerSignal / powerTotal;
 end
-%powerSignal = powerSignal';
+powerSignal = powerSignal';
 end

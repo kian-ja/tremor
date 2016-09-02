@@ -7,6 +7,7 @@ for i = 1 : numSubject
     pulseTrials = experiment.DF.pulseTrials{i};
     reflexAmplitude = [];
     for j = 1 : length(pulseTrials)
+        positionMeasured = flbReadMeasuredPosition(experiment.fileName{i},pulseTrials(j));
         position = flbReadDesiredPosition(experiment.fileName{i},pulseTrials(j));
         torque = flbReadTorque(experiment.fileName{i},pulseTrials(j));
         reflexAmplitude = pulseReflexAmplitude(position,torque,0.01,reflexAmplitude); 

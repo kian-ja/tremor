@@ -87,3 +87,7 @@ ylabel('Coherence')
 title('EMG-Torque Coherence')
 annotation('textbox','String','(C)','LineStyle','none','Position',[0.57 -0.05 0.7 0.5]);
 box off
+%%
+save representativeData2R torque_DF torque_PF1 torque_PF2...
+torque_DF_Power torque_PF1_Power torque_PF2_Power...
+EMG_DF_Coherence EMG_PF1_Coherence EMG_PF2_Coherence F

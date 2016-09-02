@@ -5,8 +5,8 @@ if (nargin == 2)
 end
 fs = 1000;
 frequency = 0 : 1: fs/2;
-overLap = 0;%500;
-windowLength = 5000;%1000;
+overLap = 500;%500;
+windowLength = 1000;%1000;
 %% Main function
 num_EMG_channel = size(EMG,2);
 CC = zeros(length(frequency),num_EMG_channel);
