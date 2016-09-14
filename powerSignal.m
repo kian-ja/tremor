@@ -5,8 +5,8 @@ if nargin == 1
 end
 fs = 1000;
 frequency = 0 : 1: fs/2;
-overLap = 500;
-windowLength = 1000;
+overLap = 500;%1000
+windowLength = 1000;%5000
 %% Preprocessing
 signal = signal - mean(signal);
 [powerSignal,F] = pwelch(signal,gausswin(windowLength),overLap,frequency,fs);
