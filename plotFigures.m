@@ -1,7 +1,7 @@
 clear
 close all
 
-load resultsNormalized
+load results/resultsNormalized
 load experimentTrials
 load resultsNotNormalized
 load experimentTrials
