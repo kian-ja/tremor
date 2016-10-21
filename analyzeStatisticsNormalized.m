@@ -9,6 +9,8 @@ frequencyBands = [1; 5; 6; 12];
 frequencyBands = [6 ; 12];
 normalize = true;
 h = waitbar(0,'Please wait...');
+MVC = zeros(7,3);
+passive = zeros(7,3);
 for i = 1 : numSubjects
     waitbar(i / numSubjects)
     disp(['analyzing subject ',num2str(i),' out of ',num2str(numSubjects)])
@@ -82,6 +84,13 @@ for i = 1 : numSubjects
     
     Results.F = F;
     Results.F_EMG = F_EMG;
+    MVC(i,1) = MVC_DF;
+    MVC(i,2) = MVC_PF1;
+    MVC(i,3) = MVC_PF2;
+    
+    passive(i,1) = passive_DF;
+    passive(i,2) = passive_PF1;
+    passive(i,3) = passive_PF2;
 
 end
 %resultsNormalized = Results;
