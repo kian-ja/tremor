@@ -10,8 +10,6 @@ subjectNumber = 3;
 frequencyBands = [5 ; 12];
 normalize = false;
 [filterB,filterA] = butter(6,5/(1000/2),'high');
-figure
-freqz(filterB,filterA)
 
 torque = flbReadTorque(experiment.fileName{subjectNumber},experiment.DF.MVC{subjectNumber});
 MVC_DF = min(torque);
@@ -91,21 +89,21 @@ if subjectNumber == 1
     EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
 end
 EMG_DF = EMG_DF(:,1);
-[EMG_DF_Coherence,F_EMG] = coherence_EMG_Torque(EMG_DF,torque_DF,F);
+[EMG_DF_Coherence,F_EMG] = coherence_EMG_Torque(EMG_DF,torque_DFFiltered,F);
 
 EMG_PF1 = concatenateEMGMultipleTrials(experiment.fileName{subjectNumber},experiment.PF1.Trials{subjectNumber});
 if subjectNumber == 1 
         EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
 end
 EMG_PF1 = EMG_PF1(:,1);
-[EMG_PF1_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF1,torque_PF1,F);
+[EMG_PF1_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF1,torque_PF1Filtered,F);
 
 EMG_PF2 = concatenateEMGMultipleTrials(experiment.fileName{subjectNumber},experiment.PF2.Trials{subjectNumber});
 if subjectNumber == 1 
         EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];
 end
 EMG_PF2 = EMG_PF2(:,1);
-[EMG_PF2_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF2,torque_PF2,F);
+[EMG_PF2_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF2,torque_PF2Filtered,F);
 
 % figure
 % subplot(2,2,1)
@@ -124,5 +122,6 @@ plot(F_EMG,EMG_DF_Coherence,'lineWidth',2)
 hold on
 plot(F_EMG,EMG_PF1_Coherence,'k','lineWidth',2)
 plot(F_EMG,EMG_PF2_Coherence,'r','lineWidth',2)
+plot([0,100],[1.65,1.65],'--','color','k')
 xlim([0,20])
 box off
