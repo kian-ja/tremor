@@ -4,17 +4,15 @@ close all
 load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
-frequencyBands = [6 ; 15];
+frequencyBands = [5 ; 12];
 normalize = false;
 h = waitbar(0,'Please wait...');
-MVC = zeros(7,3);
 for i = 1 : numSubjects
 	waitbar(i / numSubjects)
 
     disp(['analyzing subject ',num2str(i),' out of ',num2str(numSubjects)])
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.MVC{i});
     MVC_DF = min(torque);
-    MVC(i,1) = MVC_DF;
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.Passive{i});
     passive_DF = mean(torque);
     MVC_DF = MVC_DF - passive_DF;
@@ -40,7 +38,6 @@ for i = 1 : numSubjects
     
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.MVC{i});
     MVC_PF1 = min(torque);
-    MVC(i,2) = MVC_PF1;
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.Passive{i});
     passive_PF1 = mean(torque);
     MVC_PF1 = MVC_PF1 - passive_PF1;
@@ -68,7 +65,6 @@ for i = 1 : numSubjects
     torque = flbReadTorque(experiment.fileName{i},experiment.PF2.Passive{i});
     passive_PF2 = mean(torque);
     MVC_PF2 = MVC_PF2 - passive_PF2;
-    MVC(i,3) = MVC_PF2;
     torque_PF2 = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
     torque_PF2 = torque_PF2 - passive_PF2;
     torque_PF2 = torque_PF2 / MVC_PF2;
@@ -89,5 +85,5 @@ for i = 1 : numSubjects
 end
 %%
 close(h)
-resultsNotNormalized = Results;
-save results/resultsNotNormalized resultsNotNormalized;
+resultsNotNormalizedHPF = Results;
+save results/resultsNotNormalizedHPF resultsNotNormalizedHPF;
