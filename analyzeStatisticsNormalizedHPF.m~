@@ -28,7 +28,6 @@ for i = 1 : numSubjects
     powerFreqBand_DF = powerFreqBand(torque_DF_Power,F,frequencyBands,normalize);
     EMG_DF = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
     EMG_DF_MVC = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.MVC{i});
-    EMG_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.DF.MVC{i});
     if i == 1 
         EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
     end
