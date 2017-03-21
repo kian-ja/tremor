@@ -28,7 +28,7 @@ for i = 1 : numSubjects
     powerFreqBand_DF = powerFreqBand(torque_DF_Power,F,frequencyBands,normalize);
     EMG_DF = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
     EMG_DF_MVC = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.MVC{i});
-    EMG_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.DF.MVC{i});
+    EMG_DF_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.DF.MVC{i});
     if i == 1 
         EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
     end
@@ -38,8 +38,10 @@ for i = 1 : numSubjects
     Results.DF.EMGCoherenceFreqBand{i} = EMG_DF_CoherenceFreqBand;    
     Results.DF.powertorque(:,i) = torque_DF_Power;
     Results.DF.powerFreqBand(:,i) = powerFreqBand_DF;
-    Results.DF.EMG_RMS{i} = sqrt(sum(EMG_DF.^2)/size(EMG_DF,1));
-        
+    %Results.DF.EMG_RMS{i} = sqrt(sum(EMG_DF.^2)/size(EMG_DF,1));
+    Results.DF.EMG_RMS{i} = rms(EMG_DF)./EMG_DF_MVC_RMS;
+    Results.DF.EMG_MVC{i} = EMG_DF_MVC_RMS;
+    
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.MVC{i});
     MVC_PF1 = min(torque);
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.Passive{i});
@@ -52,6 +54,7 @@ for i = 1 : numSubjects
     torque_PF1_Power = powerSignal(torque_PF1,normalize);
     powerFreqBand_PF1 = powerFreqBand(torque_PF1_Power,F,frequencyBands,normalize);
     EMG_PF1 = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.PF1.Trials{i});
+    EMG_PF1_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
         EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
     end
@@ -61,8 +64,9 @@ for i = 1 : numSubjects
     Results.PF1.EMGCoherenceFreqBand{i} = EMG_PF1_CoherenceFreqBand;   
     Results.PF1.powertorque(:,i) = torque_PF1_Power;
     Results.PF1.powerFreqBand(:,i) = powerFreqBand_PF1;
-    Results.PF1.EMG_RMS{i} = sqrt(sum(EMG_PF1.^2)/size(EMG_PF1,1));
-    
+    %Results.PF1.EMG_RMS{i} = sqrt(sum(EMG_PF1.^2)/size(EMG_PF1,1));
+    Results.PF1.EMG_RMS{i} = rms(EMG_PF1)./EMG_PF1_MVC_RMS;
+    Results.PF1.EMG_MVC{i} = EMG_PF1_MVC_RMS;
     
     torque = flbReadTorque(experiment.fileName{i},experiment.PF2.MVC{i});
     MVC_PF2 = min(torque);
@@ -76,6 +80,7 @@ for i = 1 : numSubjects
     torque_PF2_Power = powerSignal(torque_PF2,normalize);
     powerFreqBand_PF2 = powerFreqBand(torque_PF2_Power,F,frequencyBands,normalize);
     EMG_PF2 = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
+    EMG_PF2_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
         EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];
     end
@@ -85,7 +90,9 @@ for i = 1 : numSubjects
     Results.PF2.EMGCoherenceFreqBand{i} = EMG_PF2_CoherenceFreqBand;
     Results.PF2.powertorque(:,i) = torque_PF2_Power;
     Results.PF2.powerFreqBand(:,i) = powerFreqBand_PF2;
-    Results.PF2.EMG_RMS{i} = sqrt(sum(EMG_PF2.^2)/size(EMG_PF2,1));
+    %Results.PF2.EMG_RMS{i} = sqrt(sum(EMG_PF2.^2)/size(EMG_PF2,1));
+    Results.PF2.EMG_RMS{i} = rms(EMG_PF2)./EMG_PF2_MVC_RMS;
+    Results.PF2.EMG_MVC{i} = EMG_PF2_MVC_RMS;
     
     
     Results.F = F;
