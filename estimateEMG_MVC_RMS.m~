@@ -15,11 +15,9 @@ function emgMvc = extractEmgMvc(emg,visualSignal)
     emgMvc = findEmgOn(emg,visualSignalOnIndex);
 end
 function emgMvc = findEmgOn(emg,visualSignalOnIndex)
-    mvcIndex = findLongSegments(visualSignalOnIndex);
-    emgMvc = zeros(length(mvcIndex),size(emg,2));
-    for i = 1 : size(emg,2)
-        emgMvc(:,i) = emg(mvcIndex,i);
-    end
+    emgMvc = zeros(1,size(emg,2));
+    for i = 1 : 
+    emgMvc = emg(findLongSegments(visualSignalOnIndex));
 end
 
 function longSegmentIndex = findLongSegments(segmentIndex,indexJumpThreshold,segmentLengthThreshold,initialSamplesSkip)
