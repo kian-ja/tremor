@@ -1,9 +1,4 @@
-rmsValue = zeros(7,3);
-for i = 1 : 7
-	rmsValue(i,1) = sum(resultsNormalizedHPF.DF.EMG_RMS{i});
-    rmsValue(i,2) = sum(resultsNormalizedHPF.PF1.EMG_RMS{i});
-    rmsValue(i,3) = sum(resultsNormalizedHPF.PF2.EMG_RMS{i});
-end
+load results/resultsNormalizedHPF
 
 rmsValueEMGChannel = zeros(21,3);
 for i = 1 : 7
@@ -26,3 +21,6 @@ end
 %%
 figure
 boxplot(rmsValueEMGChannel)
+
+figure
+bar(rmsValueEMGChannel)
