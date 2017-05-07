@@ -27,8 +27,7 @@ for i = 1 : numSubjects
     [torque_DF_Power,F] = powerSignal(torque_DF,normalize);
     powerFreqBand_DF = powerFreqBand(torque_DF_Power,F,frequencyBands,normalize);
     EMG_DF = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
-    EMG_TA_DF = concatenateEMGTAMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
-    Results.DF.EMG_TA_RMS{i} = rms(EMG_TA_DF);
+    EMG_DF = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
     EMG_DF_MVC = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.MVC{i});
     EMG_DF_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.DF.MVC{i});
     if i == 1
@@ -56,8 +55,6 @@ for i = 1 : numSubjects
     torque_PF1_Power = powerSignal(torque_PF1,normalize);
     powerFreqBand_PF1 = powerFreqBand(torque_PF1_Power,F,frequencyBands,normalize);
     EMG_PF1 = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.PF1.Trials{i});
-    EMG_TA_PF1 = concatenateEMGTAMultipleTrials(experiment.fileName{i},experiment.PF1.Trials{i});
-    Results.PF1.EMG_TA_RMS{i} = rms(EMG_TA_PF1);
     EMG_PF1_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
         EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
@@ -84,8 +81,6 @@ for i = 1 : numSubjects
     torque_PF2_Power = powerSignal(torque_PF2,normalize);
     powerFreqBand_PF2 = powerFreqBand(torque_PF2_Power,F,frequencyBands,normalize);
     EMG_PF2 = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
-    EMG_TA_PF2 = concatenateEMGTAMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
-    Results.PF2.EMG_TA_RMS{i} = rms(EMG_TA_PF2);
     EMG_PF2_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
         EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];

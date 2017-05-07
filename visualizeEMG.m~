@@ -1,0 +1,53 @@
+nSubjects = length(resultsNormalizedHPF.PF2.EMG_TA_RMS);
+EMG_TA = zeros(7,3);
+EMG_GSMed = zeros(7,3);
+EMG_GSLat = zeros(7,3);
+EMG_Sol = zeros(7,3);
+for i = 1 : nSubjects
+    EMG_TA(i,1) = 1;%resultsNormalizedHPF.DF.EMG_TA_RMS{i};
+    EMG_TA(i,2) = resultsNormalizedHPF.PF1.EMG_TA_RMS{i} / resultsNormalizedHPF.DF.EMG_TA_RMS{i};
+    EMG_TA(i,3) = resultsNormalizedHPF.PF2.EMG_TA_RMS{i} / resultsNormalizedHPF.DF.EMG_TA_RMS{i};
+    
+    EMG_GSMed(i,1) = 1;
+    EMG_GSMed(i,2) = resultsNormalizedHPF.PF1.EMG_RMS{i}(1) / resultsNormalizedHPF.DF.EMG_RMS{i}(1);
+    EMG_GSMed(i,3) = resultsNormalizedHPF.PF2.EMG_RMS{i}(1) / resultsNormalizedHPF.DF.EMG_RMS{i}(1);
+    
+    EMG_GSLat(i,1) = 1;
+    EMG_GSLat(i,2) = resultsNormalizedHPF.PF1.EMG_RMS{i}(2) / resultsNormalizedHPF.DF.EMG_RMS{i}(2);
+    EMG_GSLat(i,3) = resultsNormalizedHPF.PF2.EMG_RMS{i}(2) / resultsNormalizedHPF.DF.EMG_RMS{i}(2);
+    
+    EMG_Sol(i,1) = 1;
+    EMG_Sol(i,2) = resultsNormalizedHPF.PF1.EMG_RMS{i}(3) / resultsNormalizedHPF.DF.EMG_RMS{i}(3);
+    EMG_Sol(i,3) = resultsNormalizedHPF.PF2.EMG_RMS{i}(3) / resultsNormalizedHPF.DF.EMG_RMS{i}(3);
+    
+end
+%%
+
+pDF_MID = pValueSign2Sided(EMG_GSMed(:,1)',EMG_GSMed(:,2)');
+pDF_PF = pValueSign2Sided(EMG_GSMed(:,1)',EMG_GSMed(:,3)');
+pPF_MID = pValueSign2Sided(EMG_GSMed(:,3)',EMG_GSMed(:,2)');
+disp(['EMG-TA p value DF-MID is: ', num2str(pDF_MID)])
+disp(['EMG-TA p value DF-PF is: ', num2str(pDF_PF)])
+disp(['EMG-TA p value PF-MID is: ', num2str(pPF_MID)])
+
+pDF_MID = pValueSign2Sided(EMG_GSLat(:,1)',EMG_GSLat(:,2)');
+pDF_PF = pValueSign2Sided(EMG_GSLat(:,1)',EMG_GSLat(:,3)');
+pPF_MID = pValueSign2Sided(EMG_GSLat(:,3)',EMG_GSLat(:,2)');
+disp(['EMG-TA p value DF-MID is: ', num2str(pDF_MID)])
+disp(['EMG-TA p value DF-PF is: ', num2str(pDF_PF)])
+disp(['EMG-TA p value PF-MID is: ', num2str(pPF_MID)])
+
+pDF_MID = pValueSign2Sided(EMG_Sol(:,1)',EMG_Sol(:,2)');
+pDF_PF = pValueSign2Sided(EMG_Sol(:,1)',EMG_Sol(:,3)');
+pPF_MID = pValueSign2Sided(EMG_Sol(:,3)',EMG_Sol(:,2)');
+disp(['EMG-TA p value DF-MID is: ', num2str(pDF_MID)])
+disp(['EMG-TA p value DF-PF is: ', num2str(pDF_PF)])
+disp(['EMG-TA p value PF-MID is: ', num2str(pPF_MID)])
+
+%%
+pDF_MID = pValueSign2Sided(EMG_TA(:,1)',EMG_TA(:,2)');
+pDF_PF = pValueSign2Sided(EMG_TA(:,1)',EMG_TA(:,3)');
+pPF_MID = pValueSign2Sided(EMG_TA(:,3)',EMG_TA(:,2)');
+disp(['EMG-TA p value DF-MID is: ', num2str(pDF_MID)])
+disp(['EMG-TA p value DF-PF is: ', num2str(pDF_PF)])
+disp(['EMG-TA p value PF-MID is: ', num2str(pPF_MID)])
