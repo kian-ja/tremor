@@ -39,7 +39,7 @@ for i = 1 : 7
     if i == 1
         EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
     end
-    [EMG_DF_Coherence,F_EMG] = coherence_EMG_Torque(EMG_DF,torque_DF,F);
+    [EMG_DF_Coherence,F_EMG] = coherence_EMG_Torque(EMG_DF,torque_DFRaw,F);
     EMG_DF_CoherenceFreqBand = powerFreqBand(EMG_DF_Coherence,F_EMG,frequencyBands,true);
     Results.DF.EMGCoherence{i} = EMG_DF_Coherence;
     Results.DF.EMGCoherenceFreqBand{i} = EMG_DF_CoherenceFreqBand;    
@@ -68,7 +68,7 @@ for i = 1 : 7
     if i == 1 
         EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
     end
-    [EMG_PF1_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF1,torque_PF1,F);
+    [EMG_PF1_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF1,torque_PF1Raw,F);
     EMG_PF1_CoherenceFreqBand = powerFreqBand(EMG_PF1_Coherence,F_EMG,frequencyBands,true);
     Results.PF1.EMGCoherence{i} = EMG_PF1_Coherence;
     Results.PF1.EMGCoherenceFreqBand{i} = EMG_PF1_CoherenceFreqBand;   
@@ -98,7 +98,7 @@ for i = 1 : 7
     if i == 1 
         EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];
     end
-    [EMG_PF2_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF2,torque_PF2,F);
+    [EMG_PF2_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF2,torque_PF2Raw,F);
     EMG_PF2_CoherenceFreqBand = powerFreqBand(EMG_PF2_Coherence,F_EMG,frequencyBands,true);
     Results.PF2.EMGCoherence{i} = EMG_PF2_Coherence;
     Results.PF2.EMGCoherenceFreqBand{i} = EMG_PF2_CoherenceFreqBand;
