@@ -126,13 +126,18 @@ for i = 1 : nSubjects
     emgGSLatDF(i) = mean(emgGSLatCoherenceDFThisSubject(6:13));
     emgSolDF(i) = mean(emgGSSolCoherenceDFThisSubject(6:13));
 end
-
+%%
 EMGGsMed = [emgGSMedDF emgGSMedPF1 emgGSMedPF2];
 EMGGsLat = [emgGSLatDF emgGSLatPF1 emgGSLatPF2];
 EMGSol = [emgSolDF emgSolPF1 emgSolPF2];
 
-emgDiff = EMGGsMed-EMGGsLat;
-length(find(emgDiff>0))/21
+EMGGsMedNormalized = [emgGSMedDF./emgGSMedDF emgGSMedPF1./emgGSMedDF emgGSMedPF2./emgGSMedDF];
+EMGGsLatNormalized = [emgGSLatDF./emgGSLatDF emgGSLatPF1./emgGSLatDF emgGSLatPF2./emgGSLatDF];
+EMGSolNormalized = [emgSolDF./EMGSol emgSolPF1./EMGSol emgSolPF2./EMGSol];
 
-emgDiff = EMGGsMed-EMGSol;
-length(find(emgDiff>0))/21
+pDF_MID = signrank(EMGGsMedNormalized(:,1)',EMGGsMedNormalized(:,2)');
+pDF_PF = signrank(EMGGsMedNormalized(:,1)',EMGGsMedNormalized(:,3)');
+pPF_MID = signrank(EMGGsMedNormalized(:,3)',EMGGsMedNormalized(:,2)');
+disp(['EMG Medialis Gastroc-Torque coherence p value DF-MID is: ', num2str(pDF_MID)])
+disp(['EMG Medialis Gastroc-Torque coherence p value DF-PF is: ', num2str(pDF_PF)])
+disp(['EMG Medialis Gastroc-Torque coherence p value PF-MID is: ', num2str(pPF_MID)])

@@ -37,7 +37,7 @@ for i = 1 : 7
     EMG_DF_MVC = concatenateEMGMultipleTrials(experiment.fileName{i},experiment.DF.MVC{i});
     EMG_DF_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.DF.MVC{i});
     if i == 1
-        EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
+        %EMG_DF = [EMG_DF(:,2) EMG_DF(:,1) EMG_DF(:,3)];
     end
     [EMG_DF_Coherence,F_EMG] = coherence_EMG_Torque(EMG_DF,torque_DFRaw,F);
     EMG_DF_CoherenceFreqBand = powerFreqBand(EMG_DF_Coherence,F_EMG,frequencyBands,true);
@@ -66,7 +66,7 @@ for i = 1 : 7
     Results.PF1.EMG_TA_RMS{i} = rms(EMG_TA_PF1);
     EMG_PF1_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
-        EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
+        %EMG_PF1 = [EMG_PF1(:,2) EMG_PF1(:,1) EMG_PF1(:,3)];
     end
     [EMG_PF1_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF1,torque_PF1Raw,F);
     EMG_PF1_CoherenceFreqBand = powerFreqBand(EMG_PF1_Coherence,F_EMG,frequencyBands,true);
@@ -96,7 +96,7 @@ for i = 1 : 7
     Results.PF2.EMG_TA_RMS{i} = rms(EMG_TA_PF2);
     EMG_PF2_MVC_RMS = estimateEMG_MVC_RMS(experiment.fileName{i}, experiment.PF1.MVC{i});
     if i == 1 
-        EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];
+        %EMG_PF2 = [EMG_PF2(:,2) EMG_PF2(:,1) EMG_PF2(:,3)];
     end
     [EMG_PF2_Coherence,F_EMG] = coherence_EMG_Torque(EMG_PF2,torque_PF2Raw,F);
     EMG_PF2_CoherenceFreqBand = powerFreqBand(EMG_PF2_Coherence,F_EMG,frequencyBands,true);
