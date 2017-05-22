@@ -5,6 +5,7 @@ load experimentTrials
 numSubjects = length(experiment.fileName);
 %MVC is the minimum of torque because it PF torque is negative by convention
 %frequencyBands = [6 ; 12];
+%%
 frequencyBands = [5 ; 12];
 normalize = false;
 h = waitbar(0,'Please wait...');
@@ -12,7 +13,10 @@ MVC = zeros(7,3);
 MVCNormalized = zeros(7,3);
 passive = zeros(7,3);
 [filterB,filterA] = butter(6,5/(1000/2),'high');
-for i = 1 : numSubjects
+for i = 1 : 7
+    if i == 2
+        experiment.DF.Trials{1,2} = [14];
+    end
     waitbar(i / numSubjects)
     disp(['analyzing subject ',num2str(i),' out of ',num2str(numSubjects)])
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.MVC{i});
@@ -20,8 +24,9 @@ for i = 1 : numSubjects
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.Passive{i});
     passive_DF = mean(torque);
     MVC_DF = MVC_DF - passive_DF;
-    torque_DF = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
-    torque_DF = torque_DF - passive_DF;
+    torque_DFRaw = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.DF.Trials{i});
+    torque_DF = torque_DFRaw - passive_DF;
+    coefVariation = std(torque_DF) / mean(torque_DF);
     torque_DF = torque_DF / MVC_DF;
     torque_DF = filtfilt(filterB,filterA,torque_DF);
     [torque_DF_Power,F] = powerSignal(torque_DF,normalize);
@@ -43,14 +48,15 @@ for i = 1 : numSubjects
     %Results.DF.EMG_RMS{i} = sqrt(sum(EMG_DF.^2)/size(EMG_DF,1));
     Results.DF.EMG_RMS{i} = rms(EMG_DF)./EMG_DF_MVC_RMS;
     Results.DF.EMG_MVC{i} = EMG_DF_MVC_RMS;
-    
+    Results.DF.coefVariation(i) = coefVariation;
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.MVC{i});
     MVC_PF1 = min(torque);
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.Passive{i});
     passive_PF1 = mean(torque);
     MVC_PF1 = MVC_PF1 - passive_PF1;
-    torque_PF1 = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF1.Trials{i});
-    torque_PF1 = torque_PF1 - passive_PF1;
+    torque_PF1Raw = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF1.Trials{i});
+    torque_PF1 = torque_PF1Raw - passive_PF1;
+    coefVariation = std(torque_PF1) / mean(torque_PF1);
     torque_PF1 = torque_PF1 / MVC_PF1;
     torque_PF1 = filter(filterB,filterA,torque_PF1);
     torque_PF1_Power = powerSignal(torque_PF1,normalize);
@@ -71,14 +77,16 @@ for i = 1 : numSubjects
     %Results.PF1.EMG_RMS{i} = sqrt(sum(EMG_PF1.^2)/size(EMG_PF1,1));
     Results.PF1.EMG_RMS{i} = rms(EMG_PF1)./EMG_PF1_MVC_RMS;
     Results.PF1.EMG_MVC{i} = EMG_PF1_MVC_RMS;
+    Results.PF1.coefVariation(i) = coefVariation;
     
     torque = flbReadTorque(experiment.fileName{i},experiment.PF2.MVC{i});
     MVC_PF2 = min(torque);
     torque = flbReadTorque(experiment.fileName{i},experiment.PF2.Passive{i});
     passive_PF2 = mean(torque);
     MVC_PF2 = MVC_PF2 - passive_PF2;
-    torque_PF2 = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
-    torque_PF2 = torque_PF2 - passive_PF2;
+    torque_PF2Raw = concatenateTorqueMultipleTrials(experiment.fileName{i},experiment.PF2.Trials{i});
+    torque_PF2 = torque_PF2Raw - passive_PF2;
+    coefVariation = std(torque_PF2) / mean(torque_PF2);
     torque_PF2 = torque_PF2 / MVC_PF2;
     torque_PF2 = filter(filterB,filterA,torque_PF2);
     torque_PF2_Power = powerSignal(torque_PF2,normalize);
@@ -99,6 +107,7 @@ for i = 1 : numSubjects
     %Results.PF2.EMG_RMS{i} = sqrt(sum(EMG_PF2.^2)/size(EMG_PF2,1));
     Results.PF2.EMG_RMS{i} = rms(EMG_PF2)./EMG_PF2_MVC_RMS;
     Results.PF2.EMG_MVC{i} = EMG_PF2_MVC_RMS;
+    Results.PF2.coefVariation(i) = coefVariation;
     
     
     Results.F = F;
@@ -117,8 +126,12 @@ for i = 1 : numSubjects
     passive(i,1) = passive_DF;
     passive(i,2) = passive_PF1;
     passive(i,3) = passive_PF2;
-
+    
+    powerFreqBand_DF(3)
+    powerFreqBand_PF1(3)
+    powerFreqBand_PF2(3)
 end
+%%
 close(h)
 resultsNormalizedHPF = Results;
 save results/resultsNormalizedHPF resultsNormalizedHPF

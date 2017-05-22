@@ -4,7 +4,8 @@ if (nargin == 3)
     zTransform = true;
 end
 numSamples = length(torque);
-
+EMG = EMG - mean(EMG);
+torque = torque - mean(torque);
 fs = 1000;
 frequency = 0 : 1: fs/2;
 overLap = 0;%500;%3500;%1000

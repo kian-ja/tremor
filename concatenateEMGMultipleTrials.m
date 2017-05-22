@@ -5,4 +5,5 @@ for i = 1 : length(trials)
 	data = data.Data;
     emg = [emg;abs(data(:,4)),abs(data(:,5)),abs(data(:,7))];
 end
+emg = emg - mean(emg);
 end
