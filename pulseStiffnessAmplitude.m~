@@ -1,0 +1,58 @@
+function stiffness = pulseStiffnessAmplitude(position,torque,threshold,stiffnessValues)
+positionDiff = diff(position);
+positionDiff = max(positionDiff,0);
+largeVelocityIndex = find(positionDiff>threshold);
+largeVelocityIndexDiff = diff(largeVelocityIndex);
+falseJumpIndex = find(largeVelocityIndexDiff == 1);
+falseJumpIndex = falseJumpIndex + 1;
+largeVelocityIndex(falseJumpIndex) = [];
+
+stiffnessOnsetIndex = largeVelocityIndex + 600;
+stiffnessEndIndex = largeVelocityIndex + 950;
+
+stiffnessBeforePerturbationOnsetIndex = largeVelocityIndex - 1000;
+stiffnessBeforePerturbationEndIndex = largeVelocityIndex-100;
+
+numPulses = length(stiffnessOnsetIndex);
+stiffnessValuesThisTrial = zeros(numPulses,1);
+figure(1000)
+time = 1 : length(position);
+time = time * 0.001;
+subplot(2,1,1)
+plot(time,position)
+subplot(2,1,2)
+plot(time,torque)
+hold on
+for i = 1 : numPulses
+     positionResponse = position(stiffnessOnsetIndex(i):stiffnessEndIndex(i));
+     torqueResponse = torque(stiffnessOnsetIndex(i):stiffnessEndIndex(i));
+     plot(time(stiffnessOnsetIndex(i):stiffnessEndIndex(i)),torque(stiffnessOnsetIndex(i):stiffnessEndIndex(i)),'o')
+     responseAfterPerturbation = mean(torqueResponse(1:end));
+     positionAfterPerturbation = mean(positionResponse(1:end));
+end
+xAxisPanZoom
+pause
+close(1000)
+figure(1000)
+time = 1 : length(position);
+time = time * 0.001;
+subplot(2,1,1)
+plot(time,position)
+subplot(2,1,2)
+plot(time,torque)
+hold on
+for i = 1 : numPulses
+    positionResponse = position(stiffnessBeforePerturbationOnsetIndex(i):stiffnessBeforePerturbationEndIndex(i)); 
+    torqueResponse = torque(stiffnessBeforePerturbationOnsetIndex(i):stiffnessBeforePerturbationEndIndex(i));
+    plot(time(stiffnessBeforePerturbationOnsetIndex(i):stiffnessBeforePerturbationEndIndex(i)),torque(stiffnessBeforePerturbationOnsetIndex(i):stiffnessBeforePerturbationEndIndex(i)),'o')
+    responseBeforePerturbationSteadyState = mean(torqueResponse(1:end));
+    positionBeforePerturbation = mean(positionResponse(1:end));
+end
+xAxisPanZoom
+pause
+close(1000)
+
+stiffnessValuesThisTrial = responseAfterPerturbation - responseBeforePerturbationSteadyState;
+posDiffThisTrial = positionAfterPerturbation - positionBeforePerturbation;
+stiffnessValuesThisTrial = stiffnessValuesThisTrial ./posDiffThisTrial;
+stiffness = [stiffnessValues;stiffnessValuesThisTrial];

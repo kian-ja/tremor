@@ -6,12 +6,15 @@ normalize = true;
 for i = 1 : numSubject
     pulseTrials = experiment.DF.pulseTrials{i};
     reflexAmplitude = [];
+    stiffnessValues = [];
     for j = 1 : length(pulseTrials)
         positionMeasured = flbReadMeasuredPosition(experiment.fileName{i},pulseTrials(j));
         position = flbReadDesiredPosition(experiment.fileName{i},pulseTrials(j));
         torque = flbReadTorque(experiment.fileName{i},pulseTrials(j));
         reflexAmplitude = pulseReflexAmplitude(position,torque,0.01,reflexAmplitude); 
+        stiffnessValues = pulseStiffnessAmplitude(position,torque,0.01,stiffnessValues);
     end
+    results.DF.pulseStiffness = stiffnessValues;
     results.DF.pulseReflexAmplitude = reflexAmplitude;
     torque = flbReadTorque(experiment.fileName{i},experiment.DF.MVC{i});
     MVC_DF = min(torque);
@@ -30,13 +33,15 @@ for i = 1 : numSubject
     
     pulseTrials = experiment.PF1.pulseTrials{i};
     reflexAmplitude = [];
+    stiffnessValues = [];
     for j = 1 : length(pulseTrials)
         position = flbReadDesiredPosition(experiment.fileName{i},pulseTrials(j));
         torque = flbReadTorque(experiment.fileName{i},pulseTrials(j));
         reflexAmplitude = pulseReflexAmplitude(position,torque,0.01,reflexAmplitude); 
+        stiffnessValues = pulseStiffnessAmplitude(position,torque,0.01,stiffnessValues);
     end
+    results.PF1.pulseStiffness = stiffnessValues;
     results.PF1.pulseReflexAmplitude = reflexAmplitude;
-    
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.MVC{i});
     MVC_PF1 = min(torque);
     torque = flbReadTorque(experiment.fileName{i},experiment.PF1.Passive{i});
@@ -53,11 +58,14 @@ for i = 1 : numSubject
     
     pulseTrials = experiment.PF2.pulseTrials{i};
     reflexAmplitude = [];
+    stiffnessValues = [];
     for j = 1 : length(pulseTrials)
         position = flbReadDesiredPosition(experiment.fileName{i},pulseTrials(j));
         torque = flbReadTorque(experiment.fileName{i},pulseTrials(j));
         reflexAmplitude = pulseReflexAmplitude(position,torque,0.01,reflexAmplitude); 
+        stiffnessValues = pulseStiffnessAmplitude(position,torque,0.01,stiffnessValues);
     end
+    results.PF2.pulseStiffness = stiffnessValues;
     results.PF2.pulseReflexAmplitude = reflexAmplitude;
     
     torque = flbReadTorque(experiment.fileName{i},experiment.PF2.MVC{i});
@@ -73,4 +81,4 @@ for i = 1 : numSubject
     Results.PF2.powertorque(:,i) = torque_PF2_Power;
     Results.PF2.powerFreqBand(:,i) = powerFreqBand_PF2;
 end
-save stretchReflexResults results
+save stiffnessstretchReflexResults results

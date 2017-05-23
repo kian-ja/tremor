@@ -5,7 +5,7 @@ if nargin == 1
 end
 fs = 1000;
 frequency = 0 : 1: fs/2;
-overLap = 500;%3500;%1000
+overLap = 500;%500;%3500;%1000
 windowLength = 1000;%5000;%5000
 %% Preprocessing
 signal = signal - mean(signal);

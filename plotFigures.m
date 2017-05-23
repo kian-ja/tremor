@@ -7,7 +7,6 @@ load results/resultsNotNormalized
 load experimentTrials
 numSubjects = length(experiment.fileName);
 subjectName = createSubjectName('S',numSubjects);
-
 %%
 figure
 subplot(3,1,1)
